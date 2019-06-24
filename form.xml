@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form class="wpfdparams" method="POST"
+      action="admin.php?page=wpfd-config&amp;theme=ucftable&amp;task=config.savethemeparams">
+    <input
+            name="ucftable_styling"
+            type="switcher"
+            label="Stylize ucftable"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+    <input
+            name="ucftable_stylingmenu"
+            type="switcher"
+            label="Stylize menu"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showsize"
+            type="switcher"
+            label="Show weight"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showtitle"
+            type="switcher"
+            label="Show title"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showdescription"
+            type="switcher"
+            label="Show description"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showversion"
+            type="switcher"
+            label="Show version"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showhits"
+            type="switcher"
+            label="Show hits"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showdownload"
+            type="switcher"
+            label="Show download link"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+    <input
+            name="ucftable_croptitle"
+            type="text2"
+            label="Crop titles"
+            value="0"
+            class="inputbox input-block-level croptitle ju-input"
+            required="true"
+            tooltip="Crop the files titles after a predefined number of characters"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    />
+    <input
+            name="ucftable_bgdownloadlink"
+            type="text2"
+            label="Background download link"
+            value="#76bc58"
+            class="ju-input wp-color-field minicolors minicolors-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    />
+    <input
+            name="ucftable_colordownloadlink"
+            type="text2"
+            label="Color download link"
+            value="#ffffff"
+            class="ju-input wp-color-field minicolors minicolors-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    />
+
+    <input
+            name="ucftable_showdateadd"
+            type="switcher"
+            label="Show date added"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showdatemodified"
+            type="switcher"
+            label="Show date modified"
+            value="0"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showsubcategories"
+            type="switcher"
+            label="Show subcategories"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showcategorytitle"
+            type="switcher"
+            label="Show category title"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+    <input
+            name="ucftable_showbreadcrumb"
+            type="switcher"
+            label="Show Breadcrumb"
+            value="1"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+
+    <input
+            name="ucftable_showfoldertree"
+            type="switcher"
+            label="Show folder tree"
+            value="0"
+            class="inline ju-input"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </input>
+    <button
+            type="submit"
+            value="Save"
+            class="ju-button orange-button"
+            namespace="Joomunited\WP_File_Download\Admin\Fields\"
+    />
+</form>
