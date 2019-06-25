@@ -35,7 +35,7 @@ defined('ABSPATH') || die();
 <script type="text/x-handlebars-template" id="wpfd-template-<?php echo esc_html($name); ?>-<?php echo esc_attr($category->term_id); ?>">
     {{#if files}}
     {{#each files}}
-    <tr class="file" data-id="{{ID}}" data-catid="{{catid}}">
+    <tr class="file row align-items-center justify-content-start" data-id="{{ID}}" data-catid="{{catid}}">
     <?php
     /**
      * Action to show file info in handlebars template
@@ -48,10 +48,10 @@ defined('ABSPATH') || die();
      * @hooked showTitleHandlebars - 5
      * @hooked showDescriptionHandlebars - 10
      * @hooked showVersionHandlebars - 20
-     * @hooked showSizeHandlebars - 30
-     * @hooked showHitsHandlebars - 40
-     * @hooked showCreatedHandlebars - 50
-     * @hooked showModifiedHandlebars - 60
+     * @hooked showHitsHandlebars - 30
+     * @hooked showCreatedHandlebars - 40
+	 * @hooked showModifiedHandlebars - 50
+	 * @hooked showSizeHandlebars - 60
      *
      * @ignore Hook already documented
      */
@@ -136,10 +136,10 @@ do_action('wpfd_' . $name . '_before_theme_content', $this);
         do_action('wpfd_' . $name . '_before_files_loop', $this, $params);
         ?>
 
-        <table class="<?php echo esc_attr($this->additionalClass); ?> mediaTable">
+        <table class="<?php echo esc_attr($this->additionalClass); ?>">
 
             <thead>
-            <tr>
+            <tr class="row">
                 <?php
                 /**
                  * Action to show columns
@@ -152,10 +152,10 @@ do_action('wpfd_' . $name . '_before_theme_content', $this);
                  * @hooked thTitle - 10
                  * @hooked thDescription - 20
                  * @hooked thVersion - 30
-                 * @hooked thSize - 40
-                 * @hooked thHits - 50
-                 * @hooked thCreated - 60
-                 * @hooked thModified - 70
+                 * @hooked thHits - 40
+                 * @hooked thCreated - 50
+                 * @hooked thModified - 60
+				 * @hooked thSize - 70
                  * @hooked thDownload - 80
                  */
                 do_action('wpfd_' . $name . '_columns', $config, $params);
@@ -180,10 +180,10 @@ do_action('wpfd_' . $name . '_before_theme_content', $this);
                      * @hooked showTitle - 5
                      * @hooked showDescription - 10
                      * @hooked showVersion - 20
-                     * @hooked showSize - 30
-                     * @hooked showHits - 40
-                     * @hooked showCreated - 50
-                     * @hooked showModified - 60
+                     * @hooked showHits - 30
+                     * @hooked showCreated - 40
+                     * @hooked showModified - 50
+					 * @hooked showSize - 60
                      *
                      * @ignore
                      */

@@ -72,27 +72,48 @@ class WpfdThemeUcftable extends WpfdTheme
         if ((int) WpfdBase::loadValue($this->params, self::$prefix . 'showversion', 1) === 1) {
             add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thVersion'), 30);
             add_filter('wpfd_' . $name . '_file_info_version_handlebars_args', array(__CLASS__, 'versionHandlebars'), 10, 3);
-            add_filter('wpfd_' . $name . '_file_info_version_args', array(__CLASS__, 'version'), 10, 4);
+			add_filter('wpfd_' . $name . '_file_info_version_args', array(__CLASS__, 'version'), 10, 4);
         }
         if ((int) WpfdBase::loadValue($this->params, self::$prefix . 'showsize', 1) === 1) {
-            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thSize'), 40);
+            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thSize'), 70);
             add_filter('wpfd_' . $name . '_file_info_size_handlebars_args', array(__CLASS__, 'sizeHandlebars'), 10, 3);
-            add_filter('wpfd_' . $name . '_file_info_size_args', array(__CLASS__, 'size'), 10, 4);
+			add_filter('wpfd_' . $name . '_file_info_size_args', array(__CLASS__, 'size'), 10, 4);
+
+            // Reprioritize
+            remove_action( 'wpfd_' . $name . '_file_info_handlebars', array('WpfdTheme', 'showSizeHandlebars'), 30 );
+			add_action( 'wpfd_' . $name . '_file_info_handlebars', array('WpfdTheme', 'showSizeHandlebars'), 60, 3 );
+			remove_action( 'wpfd_' . $name . '_file_info', array(__CLASS__, 'showSize'), 30 );
+			add_action( 'wpfd_' . $name . '_file_info', array(__CLASS__, 'showSize'), 60, 3 );
         }
         if ((int) WpfdBase::loadValue($this->params, self::$prefix . 'showhits', 1) === 1) {
-            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thHits'), 50);
+            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thHits'), 40);
             add_filter('wpfd_' . $name . '_file_info_hits_handlebars_args', array(__CLASS__, 'hitsHandlebars'), 10, 3);
-            add_filter('wpfd_' . $name . '_file_info_hits_args', array(__CLASS__, 'hits'), 10, 4);
+			add_filter('wpfd_' . $name . '_file_info_hits_args', array(__CLASS__, 'hits'), 10, 4);
+
+            remove_action( 'wpfd_' . $name . '_file_info_handlebars', array( 'WpfdTheme', 'showHitsHandlebars' ), 40 );
+            add_action( 'wpfd_' . $name . '_file_info_handlebars', array( 'WpfdTheme', 'showHitsHandlebars' ), 30, 2 );
+			remove_action( 'wpfd_' . $name . '_file_info', array( __CLASS__, 'showHits' ), 40 );
+			add_action( 'wpfd_' . $name . '_file_info', array( __CLASS__, 'showHits' ), 30, 3 );
         }
         if ((int) WpfdBase::loadValue($this->params, self::$prefix . 'showdateadd', 1) === 1) {
-            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thCreated'), 60);
+            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thCreated'), 50);
             add_filter('wpfd_' . $name . '_file_info_created_handlebars_args', array(__CLASS__, 'createdHandlebars'), 10, 3);
-            add_filter('wpfd_' . $name . '_file_info_created_args', array(__CLASS__, 'created'), 10, 4);
+			add_filter('wpfd_' . $name . '_file_info_created_args', array(__CLASS__, 'created'), 10, 4);
+
+            remove_action( 'wpfd_' . $name . '_file_info_handlebars', array( 'WpfdTheme', 'showCreatedHandlebars' ), 50 );
+			add_action( 'wpfd_' . $name . '_file_info_handlebars', array( 'WpfdTheme', 'showCreatedHandlebars' ), 40, 2 );
+			remove_action( 'wpfd_' . $name . '_file_info', array( __CLASS__, 'showCreated' ), 50 );
+			add_action( 'wpfd_' . $name . '_file_info', array( __CLASS__, 'showCreated' ), 40, 3 );
         }
         if ((int) WpfdBase::loadValue($this->params, self::$prefix . 'showdatemodified', 0) === 1) {
-            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thModified'), 70);
+            add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thModified'), 60);
             add_filter('wpfd_' . $name . '_file_info_modified_handlebars_args', array(__CLASS__, 'modifiedHandlebars'), 10, 3);
-            add_filter('wpfd_' . $name . '_file_info_modified_args', array(__CLASS__, 'modified'), 10, 4);
+			add_filter('wpfd_' . $name . '_file_info_modified_args', array(__CLASS__, 'modified'), 10, 4);
+
+            remove_action( 'wpfd_' . $name . '_file_info_handlebars', array( __CLASS__, 'showModifiedHandlebars' ), 60 );
+			add_action( 'wpfd_' . $name . '_file_info_handlebars', array( __CLASS__, 'showModifiedHandlebars' ), 50, 3 );
+			remove_action( 'wpfd_' . $name . '_file_info', array( __CLASS__, 'showModified' ), 60 );
+			add_action( 'wpfd_' . $name . '_file_info', array( __CLASS__, 'showModified' ), 50, 3 );
         }
         if ((int) WpfdBase::loadValue($this->params, self::$prefix . 'showdownload', 1) === 1) {
             add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thDownload'), 80);
@@ -109,7 +130,7 @@ class WpfdThemeUcftable extends WpfdTheme
         $this->additionalClass = '';
 
         if (WpfdBase::loadValue($this->params, self::$prefix . 'styling', true)) {
-            $this->additionalClass .= 'table table-bordered ';
+            $this->additionalClass .= 'table ';
             if (WpfdBase::loadValue($this->params, self::$prefix . 'styling', true)) {
                 $this->additionalClass .= 'table-striped';
             }
@@ -172,9 +193,9 @@ class WpfdThemeUcftable extends WpfdTheme
     {
         $name = self::$themeName;
         if ($config['custom_icon']) {
-            $html = '{{#if file_custom_icon}}<span class="icon-custom"><img src="{{file_custom_icon}}"></span>{{else}}<span class="ext {{ext}}"></span>{{/if}}';
+            $html = '{{#if file_custom_icon}}<span class="icon-custom"><img src="{{file_custom_icon}}"></span>{{else}}<span class="fa fa-file-{{ext}}-o fa-2x mr-2"></span>{{/if}}';
         } else {
-            $html = '<span class="ext {{ext}}"></span>';
+            $html = '<span class="fa fa-file-{{ext}}-o fa-2x mr-2"></span>';
         }
         /**
          * Filter to change icon html for handlebars template
@@ -196,7 +217,7 @@ class WpfdThemeUcftable extends WpfdTheme
             $selectFileInput = '<input class="cbox_file_download" type="checkbox" data-id="{{ID}}" />';
         }
         $template = array(
-            'html' => $selectFileInput . '<a class="wpfd_downloadlink" href="%link$s" title="%title$s"><span class="extcol">%icon$s</span>%croptitle$s</a>',
+            'html' => $selectFileInput . '<a class="wpfd_downloadlink" href="%link$s" title="%title$s">%icon$s<span>%croptitle$s</span></a>',
             'args' => array(
                 'link'      => '{{linkdownload}}',
                 'title'     => '{{post_title}}',
@@ -219,7 +240,7 @@ class WpfdThemeUcftable extends WpfdTheme
          */
         $args = apply_filters('wpfd_' . $name . '_file_info_title_handlebars_args', $template, $config, $params);
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- this escaped
-        echo self::render('<td class="file_title">' . $args['html'] . '</td>', $args['args']);
+        echo self::render('<td data-title="Title" class="file_title col-sm-6 col-md-5">' . $args['html'] . '</td>', $args['args']);
     }
 
     /**
@@ -249,10 +270,8 @@ class WpfdThemeUcftable extends WpfdTheme
             );
         } else {
             $args = array(
-                'html' => '<span class="extcol">
-                                <span class="ext %class$s"></span>
-                                %croptitle$s
-                            </span>',
+                'html' => '<span class="fa fa-file-%class$s-o fa-2x mr-2"></span>
+							%croptitle$s',
                 'args' => array(
                     'class'     => esc_attr(strtolower($file->ext)),
                     'croptitle' => esc_html($file->crop_title)
@@ -305,7 +324,7 @@ class WpfdThemeUcftable extends WpfdTheme
          */
         $args = apply_filters('wpfd_' . $name . '_file_info_title_args', $template, $file, $config, $params);
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- this escaped
-        echo self::render('<td class="file_title">' . $args['html'] . '</td>', $args['args']);
+        echo self::render('<td data-title="Title" class="file_title col-sm-6 col-md-5">' . $args['html'] . '</td>', $args['args']);
     }
 
     /**
@@ -320,7 +339,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function descriptionHandlebars($args, $config, $params)
     {
         $args = array(
-            'html' => '<td class="file_desc">%value$s</td>',
+            'html' => '<td data-title="Description" class="file_desc col">%value$s</td>',
             'args' => array(
                 'value' => '{{{description}}}'
             )
@@ -347,7 +366,7 @@ class WpfdThemeUcftable extends WpfdTheme
             $description = wpfd_esc_desc($file->description);
         }
         $args = array(
-            'html' => '<td class="file_desc">%value$s</td>',
+            'html' => '<td data-title="Description" class="file_desc col">%value$s</td>',
             'args' => array(
                 'value' => $description
             )
@@ -368,7 +387,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function versionHandlebars($args, $config, $params)
     {
         $args = array(
-            'html' => '<td class="file_version">%value$s</td>',
+            'html' => '<td data-title="Version" class="file_version col-1 text-center">%value$s</td>',
             'args' => array(
                 'value' => '{{versionNumber}}'
             )
@@ -390,7 +409,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function version($args, $file, $config, $params)
     {
         $args = array(
-            'html' => '<td class="file_version">%value$s</td>',
+            'html' => '<td data-title="Version" class="file_version col-1 text-center">%value$s</td>',
             'args' => array(
                 'value' => esc_html(!empty($file->versionNumber) ? $file->versionNumber : '')
             )
@@ -400,6 +419,135 @@ class WpfdThemeUcftable extends WpfdTheme
     }
 
     /**
+     * Callback for file hits handlebars
+     *
+     * @param array $args   Arguments
+     * @param array $config Main config
+     * @param array $params Current category config
+     *
+     * @return array
+     */
+    public static function hitsHandlebars($args, $config, $params)
+    {
+        $args = array(
+            'html' => '<td data-title="Hits" class="file_hits col-1 text-center">%value$s</td>',
+            'args' => array(
+                'value' => '{{hits}}'
+            )
+        );
+
+        return $args;
+    }
+
+    /**
+     * Callback for file hits
+     *
+     * @param array  $args   Arguments
+     * @param object $file   Current file object
+     * @param array  $config Main config
+     * @param array  $params Current category config
+     *
+     * @return array
+     */
+    public static function hits($args, $file, $config, $params)
+    {
+        $args = array(
+            'html' => '<td data-title="Hits" class="file_hits col-1 text-center">%value$s</td>',
+            'args' => array(
+                'value' => esc_html($file->hits)
+            )
+        );
+
+        return $args;
+    }
+
+    /**
+     * Callback for file created handlebars
+     *
+     * @param array $args   Arguments
+     * @param array $config Main config
+     * @param array $params Current category config
+     *
+     * @return array
+     */
+    public static function createdHandlebars($args, $config, $params)
+    {
+        $args = array(
+            'html' => '<td data-title="Date added" class="file_created col-1 text-center">%value$s</td>',
+            'args' => array(
+                'value' => '{{created}}'
+            )
+        );
+
+        return $args;
+    }
+
+    /**
+     * Callback for file created
+     *
+     * @param array  $args   Arguments
+     * @param object $file   Current file object
+     * @param array  $config Main config
+     * @param array  $params Current category config
+     *
+     * @return array
+     */
+    public static function created($args, $file, $config, $params)
+    {
+        $args = array(
+            'html' => '<td data-title="Date added" class="file_created col-1 text-center">%value$s</td>',
+            'args' => array(
+                'value' => esc_html($file->created)
+            )
+        );
+
+        return $args;
+    }
+
+    /**
+     * Callback for file modified handlebars
+     *
+     * @param array $args   Arguments
+     * @param array $config Main config
+     * @param array $params Current category config
+     *
+     * @return array
+     */
+    public static function modifiedHandlebars($args, $config, $params)
+    {
+        $args = array(
+            'html' => '<td data-title="Date modified" class="file_modified col-1 text-center">%value$s</td>',
+            'args' => array(
+                'value' => '{{modified}}'
+            )
+        );
+
+        return $args;
+    }
+
+    /**
+     * Callback for file modified
+     *
+     * @param array  $args   Arguments
+     * @param object $file   Current file object
+     * @param array  $config Main config
+     * @param array  $params Current category config
+     *
+     * @return array
+     */
+    public static function modified($args, $file, $config, $params)
+    {
+        $args = array(
+            'html' => '<td data-title="Date modified" class="file_modified col-1 text-center">%value$s</td>',
+            'args' => array(
+                'value' => esc_html($file->modified)
+            )
+        );
+
+        return $args;
+	}
+
+	    /**
      * Callback for file size handlebars
      *
      * @param array $args   Arguments
@@ -411,7 +559,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function sizeHandlebars($args, $config, $params)
     {
         $args = array(
-            'html' => '<td class="file_size">%value$s</td>',
+            'html' => '<td data-title="Size" class="file_size col-1 text-right">%value$s</td>',
             'args' => array(
                 'value' => '{{bytesToSize size}}'
             )
@@ -434,138 +582,9 @@ class WpfdThemeUcftable extends WpfdTheme
     {
         $fileSize = ($file->size === 'n/a') ? $file->size : WpfdHelperFile::bytesToSize($file->size);
         $args     = array(
-            'html' => '<td class="file_size">%value$s</td>',
+            'html' => '<td data-title="Size" class="file_size col-1 text-right">%value$s</td>',
             'args' => array(
                 'value' => esc_html($fileSize)
-            )
-        );
-
-        return $args;
-    }
-
-    /**
-     * Callback for file hits handlebars
-     *
-     * @param array $args   Arguments
-     * @param array $config Main config
-     * @param array $params Current category config
-     *
-     * @return array
-     */
-    public static function hitsHandlebars($args, $config, $params)
-    {
-        $args = array(
-            'html' => '<td class="file_hits">%value$s</td>',
-            'args' => array(
-                'value' => '{{hits}}'
-            )
-        );
-
-        return $args;
-    }
-
-    /**
-     * Callback for file hits
-     *
-     * @param array  $args   Arguments
-     * @param object $file   Current file object
-     * @param array  $config Main config
-     * @param array  $params Current category config
-     *
-     * @return array
-     */
-    public static function hits($args, $file, $config, $params)
-    {
-        $args = array(
-            'html' => '<td class="file_hits">%value$s</td>',
-            'args' => array(
-                'value' => esc_html($file->hits)
-            )
-        );
-
-        return $args;
-    }
-
-    /**
-     * Callback for file created handlebars
-     *
-     * @param array $args   Arguments
-     * @param array $config Main config
-     * @param array $params Current category config
-     *
-     * @return array
-     */
-    public static function createdHandlebars($args, $config, $params)
-    {
-        $args = array(
-            'html' => '<td class="file_created">%value$s</td>',
-            'args' => array(
-                'value' => '{{created}}'
-            )
-        );
-
-        return $args;
-    }
-
-    /**
-     * Callback for file created
-     *
-     * @param array  $args   Arguments
-     * @param object $file   Current file object
-     * @param array  $config Main config
-     * @param array  $params Current category config
-     *
-     * @return array
-     */
-    public static function created($args, $file, $config, $params)
-    {
-        $args = array(
-            'html' => '<td class="file_created">%value$s</td>',
-            'args' => array(
-                'value' => esc_html($file->created)
-            )
-        );
-
-        return $args;
-    }
-
-    /**
-     * Callback for file modified handlebars
-     *
-     * @param array $args   Arguments
-     * @param array $config Main config
-     * @param array $params Current category config
-     *
-     * @return array
-     */
-    public static function modifiedHandlebars($args, $config, $params)
-    {
-        $args = array(
-            'html' => '<td class="file_modified">%value$s</td>',
-            'args' => array(
-                'value' => '{{modified}}'
-            )
-        );
-
-        return $args;
-    }
-
-    /**
-     * Callback for file modified
-     *
-     * @param array  $args   Arguments
-     * @param object $file   Current file object
-     * @param array  $config Main config
-     * @param array  $params Current category config
-     *
-     * @return array
-     */
-    public static function modified($args, $file, $config, $params)
-    {
-        $args = array(
-            'html' => '<td class="file_modified">%value$s</td>',
-            'args' => array(
-                'value' => esc_html($file->modified)
             )
         );
 
@@ -580,7 +599,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function thTitle()
     {
         $name = self::$themeName;
-        $html = '<th class="essential persist file_title">' . esc_html__('Title', 'wpfd') . '</th>';
+        $html = '<th class="file_title col-sm-6 col-md-5">' . esc_html__('Title', 'wpfd') . '</th>';
 
         /**
          * Filter to change html header of title column
@@ -604,7 +623,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function thDesc()
     {
         $name = self::$themeName;
-        $html = '<th class="optional file_desc">' . esc_html__('Description', 'wpfd') . '</th>';
+        $html = '<th class="file_desc col">' . esc_html__('Description', 'wpfd') . '</th>';
 
         /**
          * Filter to change html header of description column
@@ -628,7 +647,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function thVersion()
     {
         $name = self::$themeName;
-        $html = '<th class="optional file_version">' . esc_html__('Version', 'wpfd') . '</th>';
+        $html = '<th class="file_version col-1">' . esc_html__('Version', 'wpfd') . '</th>';
 
         /**
          * Filter to change html header of version column
@@ -645,30 +664,6 @@ class WpfdThemeUcftable extends WpfdTheme
     }
 
     /**
-     * Callback for print size column header
-     *
-     * @return void
-     */
-    public static function thSize()
-    {
-        $name = self::$themeName;
-        $html = '<th class="optional file_size">' . esc_html__('Size', 'wpfd') . '</th>';
-
-        /**
-         * Filter to change html header of size column
-         *
-         * @param string Header html
-         *
-         * @hookname wpfd_{$themeName}_column_size_header_html
-         *
-         * @return string
-         */
-        $output = apply_filters('wpfd_' . $name . '_column_size_header_html', $html);
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- this escaped
-        echo $output;
-    }
-
-    /**
      * Callback for print hits column header
      *
      * @return void
@@ -676,7 +671,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function thHits()
     {
         $name = self::$themeName;
-        $html = '<th class="optional file_hits">' . esc_html__('Hits', 'wpfd') . '</th>';
+        $html = '<th class="file_hits col-1">' . esc_html__('Hits', 'wpfd') . '</th>';
 
         /**
          * Filter to change html header of hits column
@@ -700,7 +695,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function thCreated()
     {
         $name = self::$themeName;
-        $html = '<th class="optional file_created">' . esc_html__('Date added', 'wpfd') . '</th>';
+        $html = '<th class="file_created col-1">' . esc_html__('Date added', 'wpfd') . '</th>';
 
         /**
          * Filter to change html header of created date column
@@ -724,7 +719,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function thModified()
     {
         $name = self::$themeName;
-        $html = '<th class="optional file_modified">' . esc_html__('Date modified', 'wpfd') . '</th>';
+        $html = '<th class="file_modified col-1">' . esc_html__('Date modified', 'wpfd') . '</th>';
 
         /**
          * Filter to change html header of modified date column
@@ -740,6 +735,30 @@ class WpfdThemeUcftable extends WpfdTheme
         echo $output;
     }
 
+	/**
+     * Callback for print size column header
+     *
+     * @return void
+     */
+    public static function thSize()
+    {
+        $name = self::$themeName;
+        $html = '<th class="file_size col-1 text-right">' . esc_html__('Size', 'wpfd') . '</th>';
+
+        /**
+         * Filter to change html header of size column
+         *
+         * @param string Header html
+         *
+         * @hookname wpfd_{$themeName}_column_size_header_html
+         *
+         * @return string
+         */
+        $output = apply_filters('wpfd_' . $name . '_column_size_header_html', $html);
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- this escaped
+        echo $output;
+    }
+
     /**
      * Callback for print download column header
      *
@@ -748,7 +767,7 @@ class WpfdThemeUcftable extends WpfdTheme
     public static function thDownload()
     {
         $name = self::$themeName;
-        $html = '<th class="essential file_download">' . esc_html__('Download', 'wpfd') . '</th>';
+        $html = '<th class="file_download col-auto">' . esc_html__('Download', 'wpfd') . '</th>';
 
         /**
          * Filter to change html header of download column
@@ -762,5 +781,9 @@ class WpfdThemeUcftable extends WpfdTheme
         $output = apply_filters('wpfd_' . $name . '_column_download_header_html', $html);
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- this escaped
         echo $output;
-    }
+	}
+
+	public static function reorder_fileinfo() {
+
+	}
 }

@@ -10,136 +10,6 @@
  * @license GNU General Public License version 2 or later; http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-@import 'jquery.mediaTable';
-
-.wpfd-content-ucftable {
-    margin-top: 20px;
-    font-family: "robotoregular";
-}
-
-.wpfd-content-ucftable tr,
-.wpfd-content-ucftable td,
-.wpfd-content-ucftable thead,
-.wpfd-content-ucftable tbody,
-.wpfd-content-ucftable th {
-    border: none;
-}
-
-.wpfd-content-ucftable a {
-    text-decoration: none !important;
-    border-bottom: 0;
-    box-shadow: none;
-}
-
-.wpfd-content-ucftable a.wpfd_downloadlink {
-    color: #444;
-    text-transform: none;
-}
-
-.wpfd-content-ucftable tr,
-.wpfd-content-ucftable td,
-.wpfd-content-ucftable thead,
-.wpfd-content-ucftable tbody,
-.wpfd-content-ucftable th {
-    font-size: 13px;
-}
-
-.wpfd-content-ucftable td.file_size,
-.wpfd-content-ucftable td.file_hits {
-    white-space: nowrap;
-}
-
-.wpfd-content-ucftable a:focus {
-    outline: none;
-}
-
-.wpfd-content-ucftable h2 {
-    padding: 10px 0 0 0;
-    margin: 0 0 10px 0;
-    font-size: 18px;
-    font-family: "robotoregular";
-    color: #595959;
-}
-.wpfd-content-ucftable .file input.cbox_file_download {
-    vertical-align: middle;
-    margin-right: 3px;
-}
-.wpfd-content-ucftable .file input.cbox_file_download:focus {
-    outline: unset;
-}
-.wpfd-content-ucftable table {
-    max-width: 100%;
-    background-color: transparent;
-    border-collapse: collapse;
-    border-spacing: 0;
-    table-layout: auto;
-}
-
-.wpfd-content-ucftable .table {
-    width: 100%;
-    margin-bottom: 20px;
-    -webkit-box-shadow: 0 2px 5px 3px #eee;
-    -moz-box-shadow: 0 2px 5px 3px #eee;
-    box-shadow: 0 2px 5px 3px #eee;
-    display: table;
-    table-layout: auto;
-    box-sizing: content-box;
-}
-
-.wpfd-content-ucftable .table th,
-.wpfd-content-ucftable .table td {
-    padding: 15px 0 15px 10px;
-    line-height: 20px;
-    text-align: left;
-    vertical-align: middle;
-    border-top: 1px solid #eee;
-}
-
-.wpfd-content-ucftable .table th {
-    font-weight: bold;
-    background-color: #e0e0e0;
-}
-
-.wpfd-content-ucftable .table thead th {
-    vertical-align: bottom;
-}
-
-.wpfd-content-ucftable .table caption + thead tr:first-child th,
-.wpfd-content-ucftable .table caption + thead tr:first-child td,
-.wpfd-content-ucftable .table colgroup + thead tr:first-child th,
-.wpfd-content-ucftable .table colgroup + thead tr:first-child td,
-.wpfd-content-ucftable .table thead:first-child tr:first-child th,
-.wpfd-content-ucftable .table thead:first-child tr:first-child td {
-    border-top: 0;
-}
-
-.wpfd-content-ucftable .table tbody + tbody {
-    border-top: 2px solid #dddddd;
-}
-
-.wpfd-content-ucftable .table {
-    background-color: #ffffff;
-}
-
-.wpfd-content-ucftable .table-condensed th,
-.wpfd-content-ucftable .table-condensed td {
-    padding: 4px 5px;
-}
-
-.wpfd-content-ucftable .table-bordered {
-    border: none;
-    border-collapse: separate;
-    border-left: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-}
-
-.wpfd-content-ucftable .table-bordered th,
-.wpfd-content-ucftable .table-bordered td {
-    border-left: none;
-}
-
 .wpfd-content-ucftable .table-bordered caption + thead tr:first-child th,
 .wpfd-content-ucftable .table-bordered caption + tbody tr:first-child th,
 .wpfd-content-ucftable .table-bordered caption + tbody tr:first-child td,
@@ -150,16 +20,6 @@
 .wpfd-content-ucftable .table-bordered tbody:first-child tr:first-child th,
 .wpfd-content-ucftable .table-bordered tbody:first-child tr:first-child td {
     border-top: 0;
-}
-
-.wpfd-content-ucftable .table-striped tbody > tr:nth-child(odd) > td,
-.wpfd-content-ucftable .table-striped tbody > tr:nth-child(odd) > th {
-    background-color: #ffffff;
-}
-
-.wpfd-content-ucftable .table-hover tbody tr:hover > td,
-.wpfd-content-ucftable .table-hover tbody tr:hover > th {
-    background-color: #f5f5f5;
 }
 
 .wpfd-content-ucftable .extcol {
@@ -398,46 +258,6 @@
     margin: 0;
     overflow-y: auto;
     flex: 1;
-}
-
-.wpfd-content-ucftable .mediaTableWrapperWithMenu {
-    padding-top: 1em;
-}
-
-.mediaTableWrapper .mediaTable .col-download {
-    text-align: left;
-    max-width: 145px !important;
-    width: 145px !important;
-    padding: 5px;
-}
-
-.wpfd-content-ucftable.colstyle .mediaTableMenu {
-    margin-top: 27px;
-    right: 10px;
-    box-shadow: none !important;
-}
-
-.wpfd-content-ucftable.colstyle .mediaTableMenu a {
-    padding: 0 15px;
-    border-radius: 5px;
-}
-
-.wpfd-content-ucftable .ucftable-download-category,
-.wpfd-content-ucftable .table-download-selected {
-    background-color: #eeeeee;
-    border-color: #dadada;
-    border-radius: 15px;
-    color: #444 !important;
-    font-size: 13px;
-    margin: 6px 5px;
-    padding: 5px 20px;
-    text-align: center;
-    text-decoration: none;
-    box-sizing: border-box;
-    display: inline-block;
-    height: 32px;
-    line-height: 22px;
-    float: right;
 }
 
 .wpfd-content-ucftable .ucftable-download-category .wpfd-download-category,

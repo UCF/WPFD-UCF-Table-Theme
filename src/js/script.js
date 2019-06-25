@@ -10,8 +10,6 @@
  * @license GNU General Public License version 2 or later; http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-// =require 'jquery.mediaTable.js'
-
 jQuery(document).ready(($) => {
 
 
@@ -39,7 +37,6 @@ jQuery(document).ready(($) => {
   });
 
   // load media tables
-  $('.wpfd-content .mediaTable').mediaTable();
 
   Handlebars.registerHelper('bytesToSize', (bytes) => {
     return bytes === 'n/a' ? bytes : bytesToSize(parseInt(bytes));
@@ -207,7 +204,6 @@ jQuery(document).ready(($) => {
         // html = $('<textarea/>').html(html).val();
         $(`.wpfd-content-multi[data-category=${sourcecat}] table tbody`).append(html);
         $(`.wpfd-content-multi[data-category=${sourcecat}] table tbody`).trigger('change');
-        $(`.wpfd-content-multi[data-category=${sourcecat}] .mediaTableMenu`).find('input').trigger('change');
 
         for (let i = 0; i < categories.categories.length; i++) {
           table_cParents[categories.categories[i].term_id] = categories.categories[i];
@@ -343,7 +339,6 @@ jQuery(document).ready(($) => {
           const html = template_table(content);
           $(`.wpfd-content-multi[data-category=${sourcecat}] table tbody`).append(html);
           $(`.wpfd-content-multi[data-category=${sourcecat}] table tbody`).trigger('change');
-          $(`.wpfd-content-multi[data-category=${sourcecat}] .mediaTableMenu`).find('input').trigger('change');
 
           if (typeof wpfdColorboxInit !== 'undefined') {
             wpfdColorboxInit();
