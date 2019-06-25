@@ -10,21 +10,23 @@
  * @license GNU General Public License version 2 or later; http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-.wpfd-content-ucftable .table-bordered caption + thead tr:first-child th,
-.wpfd-content-ucftable .table-bordered caption + tbody tr:first-child th,
-.wpfd-content-ucftable .table-bordered caption + tbody tr:first-child td,
-.wpfd-content-ucftable .table-bordered colgroup + thead tr:first-child th,
-.wpfd-content-ucftable .table-bordered colgroup + tbody tr:first-child th,
-.wpfd-content-ucftable .table-bordered colgroup + tbody tr:first-child td,
-.wpfd-content-ucftable .table-bordered thead:first-child tr:first-child th,
-.wpfd-content-ucftable .table-bordered tbody:first-child tr:first-child th,
-.wpfd-content-ucftable .table-bordered tbody:first-child tr:first-child td {
-    border-top: 0;
+.table.hide-empty {
+  &.hide {
+    display: none;
+  }
 }
 
-.wpfd-content-ucftable .extcol {
-    text-align: center;
-    /*display: inline-flex;*/
+.wpfd-content-ucftable {
+  background: transparent;
+
+  th,
+  td {
+    border-top: 0;
+  }
+
+  tbody tr {
+    border-top: 1px solid #eee;
+  }
 }
 
 .wpfd-content-ucftable .icon-custom img {
@@ -35,7 +37,7 @@
 
 .wpfd-content-ucftable .icon-custom .icon-custom-title {
     margin-left: 3px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .wpfd-content-ucftable span.ext {
@@ -250,14 +252,6 @@
     overflow-y: auto;
     -webkit-overflow-scrolling:touch;
     position: relative;
-}
-
-.wpfd-content-ucftable .wpfd-container-ucftable.with_foldertree {
-    width: 70%;
-    padding: 0 5px;
-    margin: 0;
-    overflow-y: auto;
-    flex: 1;
 }
 
 .wpfd-content-ucftable .ucftable-download-category .wpfd-download-category,

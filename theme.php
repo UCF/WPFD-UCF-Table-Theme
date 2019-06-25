@@ -55,6 +55,23 @@ class WpfdThemeUcftable extends WpfdTheme
 
         add_filter('wpfd_' . $name . '_content_wrapper', array(__CLASS__, 'contentWrapper'), 10, 2);
 
+		// Remove actions
+		remove_action( 'wpfd_' . $name . '_before_files_loop_handlebars', array( 'WpfdTheme', 'showCategoryTitleHandlebars'  ), 20 );
+		remove_action( 'wpfd_' . $name . '_before_files_loop', array( 'WpfdTheme', 'showCategoryTitle' ), 20 );
+
+		if ( (int) WpfdBase::loadValue( $this->params, self::$prefix . 'showcategorytitle', 1 ) === 1 ) {
+			add_action( 'wpfd_' . $name . '_before_files_loop_handlebars', array( __CLASS__, 'showCategoryTitleHandlebars' ), 20, 2 );
+			add_action( 'wpfd_' . $name . '_before_files_loop', array( __CLASS__, 'showCategoryTitle' ), 20, 2 );
+		}
+
+		remove_action( 'wpfd_' . $name . '_before_files_loop_handlebars', array( 'WpfdTheme', 'showCategoriesHandlebars' ), 30 );
+		remove_action( 'wpfd_' . $name . '_before_files_loop', array( 'WpfdTheme', 'showCategories' ), 30 );
+
+		if ( (int) WpfdBase::loadValue( $this->params, self::$prefix . 'showsubcategories', 1 ) === 1 ) {
+			add_action( 'wpfd_' . $name . '_before_files_loop_handlebars', array( __CLASS__, 'showCategoriesHandlebars' ), 30, 2 );
+			add_action( 'wpfd_' . $name . '_before_files_loop', array( __CLASS__, 'showCategories' ), 30, 2 );
+		}
+
         // Using local title
         if ((int) WpfdBase::loadValue($this->params, self::$prefix . 'showtitle', 1) === 1) {
             add_action('wpfd_' . $name . '_columns', array(__CLASS__, 'thTitle'), 10);
@@ -131,9 +148,6 @@ class WpfdThemeUcftable extends WpfdTheme
 
         if (WpfdBase::loadValue($this->params, self::$prefix . 'styling', true)) {
             $this->additionalClass .= 'table ';
-            if (WpfdBase::loadValue($this->params, self::$prefix . 'styling', true)) {
-                $this->additionalClass .= 'table-striped';
-            }
         }
 
         // Load additional scripts
@@ -157,7 +171,119 @@ class WpfdThemeUcftable extends WpfdTheme
             'wpfdparams',
             array('wpfdajaxurl' => $this->ajaxUrl, 'columns' => esc_html__('Columns', 'wpfd'))
         );
-    }
+	}
+
+	/**
+	 * Print category heading for handlebars template
+	 * @param array $config The config array
+	 * @param array $params The parameter array
+	 */
+	public static function showCategoryTitleHandlebars( $config, $params ) {
+		ob_start();
+?>
+		{{#if category}}{{#with category}}
+		<h2 class="heading-underline mb-4">{{name}}</h2>
+		{{#if parent}}
+		<a class="catlink wpfdcategory backcategory" href="#" data-idcat="{{parent}}">
+			<i class="zmdi zmdi-chevron-left"></i> Back
+		</a>
+		{{/if}}
+		{{/with}}{{/if}}
+<?php
+		echo trim( ob_get_clean() );
+	}
+
+	/**
+	 * Print category heading for the initial template
+	 * @param array $config The config array
+	 * @param array $params The parameter array
+	 */
+	public static function showCategoryTitle( $config, $params ) {
+		ob_start();
+		if ( isset( $config->options['category'] ) ) : $category = $config->options['category'];
+?>
+		<h2 class="heading-underline mb-4"><?php echo $category->name; ?></h2>
+		<?php if ( $category->parent ) : ?>
+		<a class="catlink wpfdcategory backcategory" href="#" data-idcat="<?php echo $category['parent']; ?>">
+            <i class="zmdi zmdi-chevron-left"></i> Back
+        </a>
+		<?php endif; ?>
+<?php
+		endif;
+		echo trim( ob_get_clean() );
+	}
+
+	/**
+	 * Categories template for handlebars
+	 * @param array $config The config array
+	 * @param array $params The params array
+	 */
+	public static function showCategoriesHandlebars( $config, $params ) {
+		ob_start();
+?>
+		{{#if categories}}
+		<table class="table">
+			<thead>
+				<tr class="row align-items-center">
+					<th class="col-8">Directory</th>
+					<th class="col text-right">File Count</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each categories}}
+				<tr class="row d-flex align-items-center">
+					<td class="col-8">
+						<a class="catlink d-flex align-items-center" href="#" data-idcat="{{term_id}}" title="{{name}}">
+							<span class="fa fa-folder fa-2x mr-2"></span><span>{{name}}</span>
+						</a>
+					</td>
+					<td class="col text-right">
+						{{count}}
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		{{/if}}
+<?php
+		echo trim( ob_get_clean() );
+	}
+
+	/**
+	 * Categories template for static
+	 * @param array $config The config array
+	 * @param array $params The params array
+	 */
+	public static function showCategories( $config, $params ) {
+		ob_start();
+		if ( isset( $config->options['categories'] ) ) :
+?>
+		<table class="table">
+			<thead>
+				<tr class="row align-items-center">
+					<th class="col-8">Directory</th>
+					<th class="col text-right">File Count</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php foreach( $config->options['categories'] as $cat ) : ?>
+				<tr class="row d-flex align-items-center">
+					<td class="col-8">
+						<a class="catlink d-flex align-items-center" href="#" data-idcat="<?php echo $cat->term_id; ?>" title="<?php echo $cat->name; ?>">
+							<span class="fa fa-folder fa-2x mr-2"></span><span><?php echo $cat->name; ?></span>
+						</a>
+					</td>
+					<td class="col text-right">
+						<?php echo $cat->count; ?>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
+<?php
+		endif;
+		echo trim( ob_get_clean() );
+	}
 
     /**
      * Print content wrapper
@@ -217,7 +343,7 @@ class WpfdThemeUcftable extends WpfdTheme
             $selectFileInput = '<input class="cbox_file_download" type="checkbox" data-id="{{ID}}" />';
         }
         $template = array(
-            'html' => $selectFileInput . '<a class="wpfd_downloadlink" href="%link$s" title="%title$s">%icon$s<span>%croptitle$s</span></a>',
+            'html' => $selectFileInput . '<a class="wpfd_downloadlink d-flex align-items-center" href="%link$s" title="%title$s">%icon$s<span>%croptitle$s</span></a>',
             'args' => array(
                 'link'      => '{{linkdownload}}',
                 'title'     => '{{post_title}}',
@@ -301,7 +427,7 @@ class WpfdThemeUcftable extends WpfdTheme
             $selectFileInput = '<input class="cbox_file_download" type="checkbox" data-id="' . $file->ID . '" />';
         }
         $template = array(
-            'html' => $selectFileInput . '<a class="wpfd_downloadlink" href="%link$s" title="%title$s">%icon$s</a>',
+            'html' => $selectFileInput . '<a class="wpfd_downloadlink d-flex align-items-center" href="%link$s" title="%title$s">%icon$s</a>',
             'args' => array(
                 'link'  => esc_url($file->linkdownload),
                 'title' => esc_attr($file->post_title),

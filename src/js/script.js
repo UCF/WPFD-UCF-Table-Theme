@@ -192,8 +192,10 @@ jQuery(document).ready(($) => {
 
         if (content.files.length) {
           container.find('.table-download-category').removeClass('display-download-category');
+          container.find('.hide-empty').removeClass('hide');
         } else {
           container.find('.table-download-category').addClass('display-download-category');
+          container.find('.hide-empty').addClass('hide');
         }
         $(`.wpfd-content-multi[data-category=${sourcecat}]`).after(content.pagination);
         delete content.pagination;

@@ -136,7 +136,7 @@ do_action('wpfd_' . $name . '_before_theme_content', $this);
         do_action('wpfd_' . $name . '_before_files_loop', $this, $params);
         ?>
 
-        <table class="<?php echo esc_attr($this->additionalClass); ?>">
+        <table class="hide-empty hide mb-5 <?php echo esc_attr($this->additionalClass); ?>">
 
             <thead>
             <tr class="row">
