@@ -20,7 +20,7 @@ class WpfdThemeUcftable extends WpfdTheme
      *
      * @var string
      */
-    public $name = 'ucftable';
+	public $name = 'ucftable';
 
     /**
      * Get tpl path for include
@@ -380,7 +380,8 @@ class WpfdThemeUcftable extends WpfdTheme
      */
     public static function showTitle($file, $config, $params)
     {
-        $name = self::$themeName;
+		$name = self::$themeName;
+
         if ($config['custom_icon'] && isset($file->file_custom_icon) && $file->file_custom_icon !== '') {
             $args = array(
                 'html' => '<span class="icon-custom">
